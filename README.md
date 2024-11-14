@@ -4,6 +4,9 @@
 ------------------------------------------------------------
 增加了GUI图形界面 (很简陋)
 
+------------------------------------------------------------
+在CRC.py文件中，发现生成并计算100个数据过慢，所以使用了pytorch(张量类型)进行计算(CRC_GPU.py)。
+
 ************************************************************
 
 Odd check, even check, CRC cyclic redundancy check and Hemming check are implemented.
@@ -11,3 +14,6 @@ Due to my limited level, I have done my best to complete it.
 
 ------------------------------------------------------------
 Added GUI (very ugly)
+
+------------------------------------------------------------
+In the CRC.py file, it was found that it was too slow to generate and calculate 100 pieces of data, so I used pytorch (tensor type) to calculate (CRC_GPU.py).
