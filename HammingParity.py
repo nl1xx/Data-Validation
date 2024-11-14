@@ -1,5 +1,4 @@
 # 海明校验(任意数据长度)
-import copy
 import random
 import numpy as np
 
@@ -159,7 +158,6 @@ def fix(corrupted_data, hamming_position):
         hamming_position_binary.append(format(i, '04b'))
 
     new_data = corrupted_data.copy()
-    multi_mistake_data = []
     one_mistake_index = []
     no_mistake_index = []
     multi_mistake_index = []

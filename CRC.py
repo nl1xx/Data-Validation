@@ -37,6 +37,7 @@ def disturb(data):
 def crc_check(received_data, poly):
     error_index = []
     errors = 0
+    remainder_list = []
     for i in range(received_data.shape[0]):
         current_data = received_data[i].copy()
         while True:
@@ -48,10 +49,11 @@ def crc_check(received_data, poly):
                 break
             current_data[index_of_first_one:index_of_first_one + len(poly)] ^= poly
         remainder = current_data[-len(poly) + 1:]
+        remainder_list.append(remainder)
         if not np.all(remainder == 0):
             errors += 1
             error_index.append(i)
-    return errors, error_index
+    return errors, error_index, remainder_list
 
 
 print("Generated Data:")
@@ -71,12 +73,18 @@ print("Disturbed data:")
 print(disturbed_data)
 print("-------------------")
 
-error_item, _ = crc_check(disturbed_data, poly)
+error_item, _, remainder = crc_check(disturbed_data, poly)
 for i in range(num):
     if i in _:
         print("\033[31m{}\033[0m".format(crc_data[i]))
     else:
         print("\033[32m{}\033[0m".format(crc_data[i]))
 print("-------------------")
+
+for i in range(num):
+    if i in _:
+        print("\033[31m{}\033[0m".format(remainder[i]))
+    else:
+        print("\033[32m{}\033[0m".format(remainder[i]))
 
 print(f"Error item: {error_item}, Accuracy: {((num - error_item) / num)*100 :.2f}%")

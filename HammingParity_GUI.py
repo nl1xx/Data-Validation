@@ -5,7 +5,7 @@ import numpy as np
 
 # 生成100个数据, 每个数据8个二进制位
 data_length = 8
-num = 10
+num = 100
 data = np.random.randint(0, 2, (num, data_length))
 
 
@@ -195,6 +195,10 @@ tk.Label(left_frame1, text=f'Hamming position: {hamming_str}', bg="lightblue").p
 tk.Label(left_frame2, text=f'Hamming position: {hamming_str}', bg="lightblue").pack()
 tk.Label(right_frame1, text=f'Hamming position: {hamming_str}', bg="lightblue").pack()
 tk.Label(right_frame2, text=f'Hamming position: {hamming_str}', bg="lightblue").pack()
+tk.Label(left_frame1, text="Original Data", bg="lightblue").pack()
+tk.Label(left_frame2, text="Add Parity/Sent Data", bg="lightblue").pack()
+tk.Label(right_frame1, text="Received Data", bg="lightblue").pack()
+tk.Label(right_frame2, text="Judge&Fix", bg="lightblue").pack()
 
 
 def on_frame_configure(event):
@@ -218,9 +222,11 @@ for i in range(num):
 
 for i in range(num):
     if i in _:
+        # 数据有误
         color = "red"
         tk.Label(right_frame1, text=''.join(map(str, corrupted_data[i])), bg=color).pack()
     else:
+        # 无误
         color = "white"
         tk.Label(right_frame1, text=''.join(map(str, corrupted_data[i])), bg=color).pack()
 
@@ -229,12 +235,15 @@ fixed_data, one_mistake, no_mistake, multi_mistake = fix(corrupted_data, hamming
 # 右2
 for i in range(num):
     if i in one_mistake:
+        # 一位错并修正
         color = "green"
         tk.Label(right_frame2, text=''.join(map(str, fixed_data[i])), bg=color).pack()
     elif i in no_mistake:
+        # 没有错误
         color = "white"
         tk.Label(right_frame2, text=''.join(map(str, corrupted_data[i])), bg=color).pack()
     else:
+        # 两位错, 不修正
         color = "yellow"
         tk.Label(right_frame2, text=''.join(map(str, corrupted_data[i])), bg=color).pack()
 

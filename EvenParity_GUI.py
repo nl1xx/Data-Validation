@@ -54,6 +54,7 @@ canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 scrollbar_y.config(command=canvas.yview)
 
 left_frame = tk.Frame(canvas, bg="lightblue")
+middle_frame = tk.Frame(canvas, bg="lightblue")
 right_frame = tk.Frame(canvas, bg="lightgreen")
 
 
@@ -62,17 +63,24 @@ def on_frame_configure(event):
 
 
 canvas.create_window((0, 0), window=left_frame, anchor='nw', tags="left_frame")
+canvas.create_window((200, 0), window=middle_frame, anchor='nw', tags="middle_frame")
 canvas.create_window((400, 0), window=right_frame, anchor='nw', tags="right_frame")
 
 # 绑定<Configure>事件以更新滚动区域
 left_frame.bind("<Configure>", on_frame_configure)
 right_frame.bind("<Configure>", on_frame_configure)
 
-# 在左侧框架显示发送数据
+tk.Label(left_frame, text="Sent Data", bg="lightblue").pack()
+tk.Label(middle_frame, text="Parity", bg="lightblue").pack()
+tk.Label(right_frame, text="Received Data to Judge", bg="lightblue").pack()
+
+
 for i in range(100):
     tk.Label(left_frame, text=''.join(map(str, data[i])), bg="lightblue").pack()
 
-# 在右侧框架显示接收到的数据
+for i in range(100):
+    tk.Label(middle_frame, text=str(parity[i]), bg="lightblue").pack()
+
 for i in range(100):
     if i in error_index:
         color = "red"
